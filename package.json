@@ -1,0 +1,24 @@
+{
+  "name": "nexusbot",
+  "version": "1.0.0",
+  "description": "A bot made for the Dueling Nexus discord server.",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThatGuyJustin/NexusBot.git"
+  },
+  "author": "ThatGuyJustin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ThatGuyJustin/NexusBot/issues"
+  },
+  "homepage": "https://github.com/ThatGuyJustin/NexusBot#readme",
+  "dependencies": {
+    "eris": "^0.10.0",
+    "moment": "^2.24.0",
+    "sqlite3": "^4.0.9"
+  }
+}
