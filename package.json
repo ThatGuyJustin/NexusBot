@@ -19,6 +19,7 @@
   "dependencies": {
     "eris": "^0.10.0",
     "moment": "^2.24.0",
+    "moment-timezone": "^0.5.26",
     "sqlite3": "^4.0.9"
   }
 }
