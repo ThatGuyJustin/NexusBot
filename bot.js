@@ -1,13 +1,20 @@
+const chalk = require('chalk');
 global.config = require('./config.json');
 global.Eris = require('eris');
 global.sqlite3 = require('sqlite3').verbose();
 global.moment = require('moment');
+global.cmdUtil = require('./modules/cmdutil');
 global.client = new Eris.CommandClient(config.token, {disableEveryone: true, autoreconnect: true}, {
     defaultHelpCommand: true,
     description: 'Bot made to assist the Dueling Nexus server.',
     name: 'NexusBot',
     owner: 'Justin#1337',
-    prefix: ['@mention', 'n!']
+    prefix: ['@mention', 'n!'],
+    defaultCommandOptions: {
+        requirements: {
+            custom: cmdUtil.checkPermission
+        }
+    }
 });
 global.logger = require('./modules/logging');
 
@@ -71,5 +78,14 @@ client.on('ready', async () => {
 // logger.info('Test');
 // logger.error('Test');
 // logger.warning('Test');
+// logger.custom('{red Test}')
+
+process.on("SIGINT", () => {
+    logger.custom(chalk`{cyan [Process]} Process has been called to shutdown.`);
+    client.disconnect();
+    logger.custom(chalk`{cyan [Process]} Client has disconnected.`);
+    Database.close();
+    logger.custom(chalk`{cyan [Process]} Database shutdown.`);
+});
 
 client.connect();
