@@ -56,36 +56,44 @@ client.on('ready', async () => {
 
     logger.info(`Bot Connected! (${client.user.username}#${client.user.discriminator})`)
 
-    let commands = fs.readdirSync('./cmds/')
-    
-    let count = 0;
-
-    commands.forEach(cmd => {
-        let command = require(`./cmds/${cmd}`);
-        let name = cmd.replace('.js', '');
-        try{
-            command.initCmd();
-            logger.info(`Command "${name}" has been registered.`)
-            count++;
-        }catch(err){
-            logger.error(`Error while enabling Command ${name}:\n\n ${err}\n\n`);
-        }
-    });
-    
-    logger.info(`Commands Fully Loaded! (${count} Total)`);
 })
+
+let commands = fs.readdirSync('./cmds/')
+    
+let count = 0;
+
+commands.forEach(cmd => {
+    let command = require(`./cmds/${cmd}`);
+    let name = cmd.replace('.js', '');
+    try{
+        command.initCmd();
+        logger.info(`Command "${name}" has been registered.`)
+        count++;
+    }catch(err){
+        logger.error(`Error while enabling Command ${name}:\n\n ${err}\n\n`);
+    }
+});
+
+logger.info(`Commands Fully Loaded! (${count} Total)`);
 
 // logger.info('Test');
 // logger.error('Test');
 // logger.warning('Test');
 // logger.custom('{red Test}')
 
+process.on('warning', (warning) => {
+    // console.warn(warning.name);    // Print the warning name
+    // console.warn(warning.message); // Print the warning message
+    // console.warn(warning.stack);   // Print the stack trace
+    logger.warning(warning);
+});
+
 process.on("SIGINT", () => {
-    logger.custom(chalk`{cyan [Process]} Process has been called to shutdown.`);
+    logger.custom(chalk`{cyan [Process]} Process has been called to shutdown....`);
     client.disconnect();
-    logger.custom(chalk`{cyan [Process]} Client has disconnected.`);
+    logger.custom(chalk`{cyan [Process]} Bot has Disconnected....`);
     Database.close();
-    logger.custom(chalk`{cyan [Process]} Database shutdown.`);
+    logger.custom(chalk`{cyan [Process]} Database shutting down.`);
 });
 
 client.connect();
