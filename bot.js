@@ -68,4 +68,8 @@ client.on('ready', async () => {
     logger.info(`Commands Fully Loaded! (${count} Total)`);
 })
 
+// logger.info('Test');
+// logger.error('Test');
+// logger.warning('Test');
+
 client.connect();
