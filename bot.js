@@ -1,9 +1,12 @@
 const chalk = require('chalk');
+global.fs = require('fs');
 global.config = require('./config.json');
 global.Eris = require('eris');
 global.sqlite3 = require('sqlite3').verbose();
 global.moment = require('moment');
 global.cmdUtil = require('./modules/cmdutil');
+global.messageCache = new Map();
+global.messagesClass = require('./modules/message');
 global.client = new Eris.CommandClient(config.token, {disableEveryone: true, autoreconnect: true}, {
     defaultHelpCommand: true,
     description: 'Bot made to assist the Dueling Nexus server.',
@@ -19,6 +22,8 @@ global.client = new Eris.CommandClient(config.token, {disableEveryone: true, aut
 global.logger = require('./modules/logging');
 
 // Log that the process has started
+global.log = fs.createWriteStream('./bot.log', { flags: 'a' });
+
 logger.info('Process Started');
 
 // Load all the database essentials
@@ -50,8 +55,6 @@ Database.getAllAsync = function (sql) {
 };
 
 // Move on to the bot startup and command registration.
-global.fs = require('fs');
-
 client.on('ready', async () => {
 
     logger.info(`Bot Connected! (${client.user.username}#${client.user.discriminator})`)

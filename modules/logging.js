@@ -20,6 +20,11 @@ function custom(msg){
 }
 exports.custom = custom;
 
+function debug(msg){
+    console.log(chalk`${currentTime()} | {cyan [Debug]} ${msg}`);
+}
+exports.debug = debug;
+
 function currentTime(){
     let mom = require('moment-timezone');
     let time = mom.tz('America/New_York').format("MMM Do YYYY h:mm:ss a z"); // "July 12th 2012, 5:01:50 pm EST" 
